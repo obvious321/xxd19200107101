@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TravelerDao">
+    <select id="listTraveler" resultType="com.example.demo.entity.Traveler">
+        select *
+        from travel
+    </select>
+    
+    <select id="ListTravelerByName" resultType="com.example.demo.entity.Traveler">
+        select *
+        from travel
+        <where>
+            <if test="name!=null and name!=''">
+                AND travel.name =#{name}
+            </if>
+        </where>
+    </select>
+    
+    <delete id="deleteTravelerById" parameterType="int">
+        delete  from travel where id=#{id}
+    </delete>
+    
+    <select id="queryTravelerById" parameterType="int" resultType="com.example.demo.entity.Traveler">
+        select * from travel where id=#{id}
+    </select>
+    
+    <update id="updateTraveler" parameterType="com.example.demo.entity.Traveler" >
+        update travel
+        set id=#{id},name=#{name},time=#{time},place=#{place},end=#{end},include=#{include},spend=#{spend}
+        where id=#{id};
+    </update>
+
+    <insert id="addTraveler" parameterType="com.example.demo.entity.Traveler" >
+        insert into travel (id,name,time,place,end,include,spend) values(#{id},#{name},#{time},#{place},#{end},#{include},#{spend})
+    </insert>
+</mapper>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmln="http//www.thymeleaf.org"  xmlns:th="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>固定折叠侧边栏菜单插件 </title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrapmb.com.css">
+    <link rel="stylesheet" type="text/css" href="fonts/iconfont.css">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            width:100%;
+            height:100%;
+            background: url("/img/123.jpg");
+            background-size: 1400px;
+        }
+    </style>
+</head>
+<body>
+<!--导航栏-->
+<!--导航栏-->
+<div class="nav">
+    <div class="nav-top">
+        <div id="mini" style="border-bottom:1px solid rgba(255,255,255,.1)"><img src="img/mini.png" ></div>
+    </div>
+    <ul>
+        <li class="nav-item">
+            <a href="javascript:;"><i class="my-icon nav-icon icon_1"></i><span>活动信息</span><i class="my-icon nav-more"></i></a>
+            <ul>
+                <li><a href=""><span>西部支教计划</span></a></li>
+                <li><a href="javascript:;"><span>横塘社区禁毒宣传志愿活动</span></a></li>
+                <li><a href="javascript:;"><span>丝绸之路经典六日游</span></a></li>
+                <li><a href="javascript:;"><span>滇西北深度七日游</span></a></li>
+                <li><a href="javascript:;"><span>湖北八日游</span></a></li>
+                <li><a href="javascript:;"><span>青海湖张掖深度五日游</span></a></li>
+                <li><a href="javascript:;"><span>深港澳欢乐五日游</span></a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:;"><i class="my-icon nav-icon icon_2"></i><span>团员信息</span><i class="my-icon nav-more"></i></a>
+            <ul>
+                <li><a href="person"><span>西部支教计划团员信息</span></a></li>
+                <li><a href="person"><span>横塘社区禁毒宣传志愿活动团员信息</span></a></li>
+                <li><a href="javascript:;"><span>丝绸之路经典六日游团员信息</span></a></li>
+                <li><a href="javascript:;"><span>滇西北深度七日游团员信息</span></a></li>
+                <li><a href="javascript:;"><span>湖北八日游团员信息</span></a></li>
+                <li><a href="javascript:;"><span>青海湖张掖深度五日游团员信息</span></a></li>
+                <li><a href="javascript:;"><span>深港澳欢乐五日游团员信息</span></a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="self"><i class="my-icon nav-icon icon_3"></i><span>个人中心（缴费）</span><i class="my-icon nav-more"></i></a>
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    //主页面
+    $("#company_logo").click(function () {
+        $(this).attr("href", "/ssm/main");
+    });
+    //账号退出
+    $(".ssm_logout").click(function () {
+        window.location.href = "/ssm/logout";
+    });
+</script>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="ui container">
+            <h1>&nbsp;</h1>
+            <h1>&nbsp;</h1>
+            <!--搜索框-->
+            <div style="text-align:center">
+                <form th:action="@{/person}" method="post" style="display: inline-block !important;">
+                    <input type="text" name="name" placeholder="输入团员名查找">
+                    <input type="submit" value="搜索" class="btn btn-info">
+                </form>
+            </div>
+            <!--表格-->
+            <table class="ui table table-bordered" style="margin-top: 40px !important;">
+                <thead>
+                <tr><th>id</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>电话</th>
+                    <th style="width: 25%">操作</th>
+                </tr></thead>
+                <tbody>
+                <tr th:each="person:${page.list}">
+                    <td th:text="${person.id}"></td>
+                    <td th:text="${person.name}"></td>
+                    <td th:text="${person.sex}"></td>
+                    <td th:text="${person.age}"></td>
+                    <td th:text="${person.telephone}"></td>
+                    <td>
+                        <a th:href="@{/peopleedit/{id}(id=${person.id})}" class="btn btn-info">修改个人信息</a>
+                        <a th:href="@{/peopledelete/{id}(id=${person.id})}" class="btn btn-info">退选活动</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--页面跳转-->
+            <div class="ui attached segment" >
+                <table class="m-mobile-wide" width="425px">
+                    <tbody>
+                    <tr align="center">
+                        <td>
+                            <a th:href="@{/(pageNum=${page.pageNum}-1)}"  class="ui button basic mini" th:unless="${page.isFirstPage}">上一页</a>
+                        </td>
+                        <td>
+                            第
+                            <h8 th:text="${page.pageNum}"></h8>
+                            页/共
+                            <h8 th:text="${page.pages}"></h8>
+                            页
+                            共
+                            <h8 th:text="${page.total}"></h8>
+                            条
+                        </td>
+                        <td>
+                            <form name="pageForm" th:action="@{/person}" method="get">
+                                <div class="ui mini input ">
+                                    <input type="text" class="m-bg" name="pageNum" placeholder="页码" style="width: 50px!important; height: 27.76px!important;" required>
+                                    <button type="submit" style="font-size: 11px!important;width: 30px!important; height: 0px!important; border: none;margin: 5px;padding: 0;" class="button mini">
+                                        跳转
+                                    </button>
+                                </div>
+                            </form>
+                        </td>
+                        <td> &nbsp;</td>
+                        <td  style="float: right">
+                            <a th:href="@{/(pageNum=${page.pageNum}+1)}" class="ui button basic mini " style="float: right;" th:unless="${page.isLastPage}">下一页</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <!--添加活动-->
+            <div class="col-lg-5  pull-right">
+                <a th:href="@{/updatepeople}"  class="btn btn-info" style="margin-left: 60px !important;" >添加活动</a>
+            </div>
+            <!--提示-->
+            <div class="ui success  message" th:unless="${#strings.isEmpty(message)}">
+                <i class="close icon"></i>
+                <div class="header">提示：</div>
+                <p th:text="${message}"></p>
+            </div>
+        </div>
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+        <script>
+            $(".message .close").on('click',function () {
+                $(this).closest(".message")
+                    .transition("fade");
+            })
+        </script>
+    </div>
+</div>
+</div>
+
+
+<script src="js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="js/bootstrapmb.com.js"></script>
+</body>
+</html>

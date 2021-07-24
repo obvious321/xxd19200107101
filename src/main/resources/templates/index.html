@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html xmln="http//www.thymeleaf.org"  xmlns:th="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>固定折叠侧边栏菜单插件 </title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrapmb.com.css">
+    <link rel="stylesheet" type="text/css" href="fonts/iconfont.css">
+	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: sans-serif;
+			width:100%;
+			height:100%;
+			background: url("/img/123.jpg");
+			background-size: 1400px;
+		}
+	</style>
+</head>
+
+
+<body>
+<!--导航栏-->
+	<div class="nav">
+		<div class="nav-top">
+			<div id="mini" style="border-bottom:1px solid rgba(255,255,255,.1)"><img src="img/mini.png" ></div>
+		</div>
+		<ul>
+			<li class="nav-item">
+				<a href="javascript:;"><i class="my-icon nav-icon icon_1"></i><span>活动信息</span><i class="my-icon nav-more"></i></a>
+				<ul>
+					<li><a href=""><span>西部支教计划</span></a></li>
+					<li><a href="javascript:;"><span>横塘社区禁毒宣传志愿活动</span></a></li>
+					<li><a href="javascript:;"><span>丝绸之路经典六日游</span></a></li>
+					<li><a href="javascript:;"><span>滇西北深度七日游</span></a></li>
+					<li><a href="javascript:;"><span>湖北八日游</span></a></li>
+					<li><a href="javascript:;"><span>青海湖张掖深度五日游</span></a></li>
+					<li><a href="javascript:;"><span>深港澳欢乐五日游</span></a></li>
+				</ul>
+			</li>
+			<li class="nav-item">
+				<a href="javascript:;"><i class="my-icon nav-icon icon_2"></i><span>团员信息</span><i class="my-icon nav-more"></i></a>
+				<ul>
+					<li><a href="person"><span>西部支教计划团员信息</span></a></li>
+					<li><a href="person"><span>横塘社区禁毒宣传志愿活动团员信息</span></a></li>
+					<li><a href="javascript:;"><span>丝绸之路经典六日游团员信息</span></a></li>
+					<li><a href="javascript:;"><span>滇西北深度七日游团员信息</span></a></li>
+					<li><a href="javascript:;"><span>湖北八日游团员信息</span></a></li>
+					<li><a href="javascript:;"><span>青海湖张掖深度五日游团员信息</span></a></li>
+					<li><a href="javascript:;"><span>深港澳欢乐五日游团员信息</span></a></li>
+				</ul>
+			</li>
+			<li class="nav-item">
+				<a href="self"><i class="my-icon nav-icon icon_3"></i><span>个人中心（缴费）</span><i class="my-icon nav-more"></i></a>
+			</li>
+		</ul>
+	</div>
+<h1>&nbsp;</h1>
+<h1>&nbsp;</h1>
+
+<div>
+	<!--搜索框-->
+	<div class="container">
+		<div style="text-align:center">
+			<form th:action="@{/}" method="post">
+				<input type="text" name="name" placeholder="输入活动名称查找">
+				<input type="submit" value="搜索" class="btn btn-info">
+			</form>
+		</div>
+	</div>
+	<h4>&nbsp;</h4>
+	<!--表格-->
+	<div>
+	<table class="table table-bordered" cellspacing="0" border="0"  style="width:80%;margin:20px auto;text-align: center" >
+		<thead>
+		<tr>
+			<td>活动编号</td>
+			<td>活动名称</td>
+			<td>活动时间</td>
+			<td>活动起点</td>
+			<td>活动终点</td>
+			<td style="width: 25%">活动内容</td>
+			<td>活动花费</td>
+			<td style="width: 10%">操作</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="travel:${page.list}" >
+			<td th:text="${travel.id}"></td>
+			<td th:text="${travel.name}"></td>
+			<td th:text="${travel.time}"></td>
+			<td th:text="${travel.place}"></td>
+			<td th:text="${travel.end}"></td>
+			<td th:text="${travel.include}"   style="width: 20%"></td>
+			<td th:text="${travel.spend}"></td>
+			<td width="20%">
+				<a th:href="@{/edit/{id}(id=${travel.id})}" class="btn btn-info">修改</a>
+				<a th:href="@{/delete/{id}(id=${travel.id})}" class="btn btn-info">删除</a>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	</div>
+	<!--页码-->
+	<div>
+	<ul class="pager">
+		<form name="pageForm" th:action="@{/}" method="get">
+			<ul class="pager">
+				<li>第<h8 th:text="${page.pageNum}">2</h8></li>
+				<li>    页/共<h8 th:text="${page.pages}">4</h8>页</li>
+				<li>共<h8 th:text="${page.total}">29</h8> 条</li>
+				<li><a th:href="@{/(pageNum=${page.pageNum}-1)}" th:unless="${page.isFirstPage}">上一页</a></li>
+				<li><a th:href="@{/(pageNum=${page.pageNum}+1)}" th:unless="${page.isLastPage}">下一页</a></li>
+			</ul>
+			<div class="col-lg-5  pull-right">
+				<a th:href="@{/update}" class="btn btn-info" style="margin-left: 60px !important;" >添加活动</a>
+			</div>
+
+		</form>
+	</ul>
+	</div>
+	<!--提示-->
+	<div class="alert alert-success alert-dismissable" th:unless="${#strings.isEmpty(message)}">
+		<i class="close icon"></i>
+		<button type="button" class="close" data-dismiss="alert"aria-hidden="true">&times;</button>
+		<div class="header">提示：</div>
+		<p th:text="${message}"></p>
+	</div>
+</div>
+
+
+	<script src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrapmb.com.js"></script>
+</body>
+</html>

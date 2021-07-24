@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmln="http//www.thymeleaf.org"  xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>添加活动</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+    body{
+        width:100%;
+        height:100%;
+        background: url("/img/556.jpg") no-repeat center ;
+        background-size: 2000px;
+    }
+</style>
+</head>
+<body>
+<div style="width: 75%; text-align: center; margin: 100px auto 0 auto; height:520px; border: 1px solid #7398a7;
+        border-radius: 5px; box-shadow:#295b6f 0 0 10px; ">
+<h1 align="center">请填写活动信息</h1>
+<h1>&nbsp;</h1>
+
+<form class="form-horizontal" role="form" th:action="@{/edit}" method="post" th:object="${traveler}">
+    <input type="hidden" th:value="*{id}" name="id">
+    <div class="form-group">
+        <label class="col-sm-4 control-label" >活动编号</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="id" required th:value="*{id}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-4 control-label" >活动名称</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="name"  required th:value="*{name}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-4 control-label" >活动时间</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="time"  required th:value="*{time}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-4 control-label" >活动起点</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="place"  required th:value="*{place}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-4 control-label" >活动终点</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="end"  required th:value="*{end}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-4 control-label" >活动内容</label>
+        <div class="col-sm-5">
+            <input type="" class="form-control" name="include"  required th:value="*{include}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-4 control-label" >活动花费</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="spend"  required th:value="*{spend}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-6" >
+            <button type="submit" class="btn btn-info" >提交</button>
+        </div>
+    </div>
+
+
+</form>
+</div>
+<script>
+    $(".message .close").on('click',function () {
+        $(this).closest(".message")
+            .transition("fade");
+    })
+</script>
+</body>
+</html>
